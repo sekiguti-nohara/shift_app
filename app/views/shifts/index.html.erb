@@ -1,0 +1,7 @@
+<%= link_to "今日のシフトを表示する", shifts_path,method: :post%>
+
+<% @shifts.each do |shift| %>
+	<%= shift.staff.name %>
+	<%= shift.start %>
+	<%= shift.end %><br>
+<% end %>
