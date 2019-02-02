@@ -1,7 +1,7 @@
 class Shift < ApplicationRecord
 	belongs_to :staff
 
-	def self.get_today_shifts_from_air_shift
+	def self.get_today_shifts
 		hash_data = Datum.log_in_air_shift_and_get_data
 		shifts = hash_data["app"]["monthlyshift"]["shift"]["shifts"]
 		today_shifts = shifts.select { |shift| shift["date"] == Date.today.strftime("%Y%m%d") }

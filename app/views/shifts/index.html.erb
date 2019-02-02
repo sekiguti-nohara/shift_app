@@ -2,6 +2,6 @@
 
 <% @shifts.each do |shift| %>
 	<%= shift.staff.name %>
-	<%= shift.start %>
-	<%= shift.end %><br>
+	<%= shift.start.strftime("%H:%M") %>~<%= shift.end.strftime("%H:%M") %>
+	<br>
 <% end %>

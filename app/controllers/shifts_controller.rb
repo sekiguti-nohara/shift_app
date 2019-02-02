@@ -4,8 +4,8 @@ class ShiftsController < ApplicationController
 	end
 
 	def create
-		Staff.remake_staff_table if Staff.are_there_new_staff?
-		today_shifts = Shift.get_today_shifts_from_air_shift
+		Staff.remake_staff_table if Staff.new_staff?
+		today_shifts = Shift.get_today_shifts
 		binding.pry
 		today_shifts.each do |shift|
 			shift_new = Shift.new

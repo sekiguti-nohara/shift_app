@@ -13,7 +13,7 @@ class Staff < ApplicationRecord
 		end
 	end
 
-	def self.are_there_new_staff?
+	def self.new_staff?
 		hash_data = Datum.log_in_air_shift_and_get_data
 		staffs = hash_data["app"]["staffList"]["staff"]
 		return staffs.count != Staff.all.count
