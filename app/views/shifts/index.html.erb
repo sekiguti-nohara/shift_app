@@ -4,6 +4,5 @@
 	<%= shift.staff.name %>
 	<%= shift.start.strftime("%H:%M") %>~<%= shift.end.strftime("%H:%M") %>
 	<%= shift.content_of_work %>
-	<%= link_to "編集", edit_shift_path(shift) %>
 	<br>
 <% end %>
