@@ -3,18 +3,40 @@ class ShiftsController < ApplicationController
 		@shifts = Shift.where(date: Date.today)
 	end
 
+	# その日のシフトを保存する
 	def create
-		Staff.remake_staff_table if Staff.new_staff?
+		Staff.remake_staff_table if Staff.staff_updated?
 		today_shifts = Shift.get_today_shifts
-		binding.pry
+		Shift.where(date: Date.today).destroy_all if Shift.last.date == Date.today
 		today_shifts.each do |shift|
 			shift_new = Shift.new
 			shift_new.staff_id = Staff.find_by(air_shift_id: shift["staffId"]).id
-			shift_new.start,shift_new.end = Shift.parse_shift_time(shift)
+			shift_new.parse_shift_time(shift)
 			shift_new.date = Date.today
-			shift_new.kind_of_work = shift["groupId"].to_i
+			shift_new.content_of_work = shift["groupId"].to_i
 			shift_new.save
 		end
 		redirect_to shifts_path
+	end
+
+	def edit
+		@shift = Shift.find(params[:id])
+	end
+
+	def update
+		shift = Shift.find(params[:id])
+		shift.update(shift_params)
+		redirect_to shifts_path
+	end
+
+	def destroy
+		shift = Shift.find(params[:id])
+		shift.destroy
+		redirect_to shifts_path
+	end
+
+	private
+	def shift_params
+		params.require(:shift).permit(:start, :end ,:kind_of_work)
 	end
 end

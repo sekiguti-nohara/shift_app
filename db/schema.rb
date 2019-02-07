@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2019_01_30_075104) do
 
   create_table "shifts", force: :cascade do |t|
     t.integer "staff_id"
-    t.integer "kind_of_work"
+    t.integer "content_of_work"
     t.date "date"
     t.datetime "start"
     t.datetime "end"

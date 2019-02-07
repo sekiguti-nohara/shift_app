@@ -1,6 +1,7 @@
 class Staff < ApplicationRecord
 	has_many :shifts
 
+	# staffテーブルを作り直す
 	def self.remake_staff_table
 		Staff.destroy_all
 		hash_data = Datum.log_in_air_shift_and_get_data
@@ -13,7 +14,8 @@ class Staff < ApplicationRecord
 		end
 	end
 
-	def self.new_staff?
+	# スタッフが変化したかどうかの判断
+	def self.staff_updated?
 		hash_data = Datum.log_in_air_shift_and_get_data
 		staffs = hash_data["app"]["staffList"]["staff"]
 		return staffs.count != Staff.all.count
