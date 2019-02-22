@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
 	def index
-		@shifts = Shift.where(date: Date.today)
+		@shifts = Shift.where(date: Date.today).includes(:staff) #staffをincludeしておくことにより、N+1問題を解決
 	end
 
 	# その日のシフトを保存する

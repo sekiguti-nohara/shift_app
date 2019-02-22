@@ -1,8 +1,38 @@
 <p><%= link_to "今日のシフトを表示する", shifts_path,method: :post%></p>
 
-<% @shifts.order("content_of_work").each do |shift| %>
-	<%= shift.staff.name %>
-	<%= shift.start.strftime("%H:%M") %>~<%= shift.end.strftime("%H:%M") %>
-	<%= shift.content_of_work %>
-	<br>
-<% end %>
+<div>
+  <% @shifts.order("content_of_work").each do |shift| %>
+  	<%= shift.staff.name %>
+  	<%= shift.start.strftime("%H:%M") %>~<%= shift.end.strftime("%H:%M") %>
+  	<%= shift.content_of_work %>
+  	<br>
+  <% end %>
+</div>
+
+  <div class="mermaid">  
+  gantt
+    title <%= Date.today.strftime("%Y年%m月%d日(#{["日", "月", "火", "水", "木", "金", "土"][Date.today.wday]})") %>
+    dateFormat  HH-mm
+    axisFormat  %H:%M
+    section member 
+    time :"10-00","22-00"
+    <% @shifts.order("content_of_work").each_with_index do |shift,i| %>
+      section <%= i+1 %> <%= shift.staff.name %>
+      <%= shift.content_of_work %> :<%= shift.start.strftime("%H-%M") %>,<%= shift.end.strftime("%H-%M") %>
+    <% end %>
+  </div>
+
+  <script>
+    // ガントチャートの初期化
+    mermaid.initialize({
+      theme: 'forest' //テーマを変えることができる(forestでもよさそう)
+    })
+
+    mermaid.ganttConfig = {
+      titleTopMargin:25,
+      barHeight:25,
+      barGap:8,
+      topPadding:75,
+      sidePadding:100,
+    }
+  </script>
